@@ -15,10 +15,10 @@ import {
   filterByFavorite, 
   filterByChangePercentage 
 } from '../../../features/stocks/StockSlice';
-import { StockTable } from './StockTable';
 import { TabButton } from './TabButton';
 import { FilterModal } from './FilterModal';
 import Image from 'next/image';
+import StockTable from './StockTable';
 
 function Stocks() {
   const [activeTab, setActiveTab] = useState('all');
@@ -134,7 +134,6 @@ function Stocks() {
     dispatch(fetchStocks({ currentPage }));
   };
 
-  // Loading state (commented-out for now)
   if (loading) {
     return (
       <div className="flex justify-center items-center h-full w-full">
@@ -189,7 +188,6 @@ function Stocks() {
             )}
           </div>
 
-          {/* Stock Table */}
           <StockTable
             data={filteredStocks}
             handleNextPage={handleNextPage}

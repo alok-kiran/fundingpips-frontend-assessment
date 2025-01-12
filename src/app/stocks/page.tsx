@@ -1,10 +1,13 @@
-import React from 'react';
-import Stocks from '@/app/stocks/_components/Stocks';
+import React, { lazy, Suspense } from 'react';
+
+const Stocks = lazy(() => import('@/app/stocks/_components/Stocks'));
 
 function StocksPage() {
-   return (
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
      <Stocks />
-   )
+    </Suspense>
+  )
 }
 
 export default StocksPage;

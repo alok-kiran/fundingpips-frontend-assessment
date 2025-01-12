@@ -22,7 +22,7 @@ interface StockTableProps {
   activeTab: string;
 }
 
-export function StockTable({ 
+const StockTable = ({ 
   data, 
   //handleNextPage, 
   //handlePreviousPage, 
@@ -35,7 +35,7 @@ export function StockTable({
   //currentPage,
   //totalPage,
   //activeTab,
-}: StockTableProps) {
+}: StockTableProps) => {
   return (
     <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-sm">
       <table className="w-full divide-y divide-gray-200 ">
@@ -175,3 +175,5 @@ export function StockTable({
     </div>
   );
 }
+
+export default React.memo(StockTable);
