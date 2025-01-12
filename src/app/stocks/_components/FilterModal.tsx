@@ -74,7 +74,7 @@ export const FilterModal: React.FC<FilterModalProps> = ({
         }
       }}
     >
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-w-md" data-cy="filter-modal">
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold">
             Filter Stocks
@@ -86,6 +86,7 @@ export const FilterModal: React.FC<FilterModalProps> = ({
             <label className="block font-semibold mb-2">Price Range</label>
             <div className="flex space-x-2">
               <Input
+                data-cy="min-price"
                 type="number"
                 placeholder="Min"
                 className=" px-2 py-1 w-full "
@@ -93,6 +94,7 @@ export const FilterModal: React.FC<FilterModalProps> = ({
                 onChange={(e) => setMinPrice(Number(e.target.value))}
               />
               <Input
+                data-cy="max-price"
                 type="number"
                 placeholder="Max"
                 className=" px-2 py-1 w-full "
@@ -106,6 +108,7 @@ export const FilterModal: React.FC<FilterModalProps> = ({
             <label className="block font-semibold mb-2">Change Range</label>
             <div className="flex space-x-2">
               <Input
+                data-cy="min-change"
                 type="number"
                 placeholder="Min"
                 className=" px-2 py-1 w-full "
@@ -113,6 +116,7 @@ export const FilterModal: React.FC<FilterModalProps> = ({
                 onChange={(e) => setMinChange(Number(e.target.value))}
               />
               <Input
+                data-cy="max-change"
                 type="number"
                 placeholder="Max"
                 className=" px-2 py-1 w-full "
@@ -128,6 +132,7 @@ export const FilterModal: React.FC<FilterModalProps> = ({
             </label>
             <div className="flex space-x-2">
               <Input
+                data-cy="min-percentage"
                 type="number"
                 placeholder="Min %"
                 className=" px-2 py-1 w-full "
@@ -135,6 +140,7 @@ export const FilterModal: React.FC<FilterModalProps> = ({
                 onChange={(e) => setMinPercentage(Number(e.target.value))}
               />
               <Input
+                data-cy="max-percentage"
                 type="number"
                 placeholder="Max %"
                 className=" px-2 py-1 w-full "
@@ -146,6 +152,7 @@ export const FilterModal: React.FC<FilterModalProps> = ({
 
           <div className="flex items-center space-x-2">
             <input
+              data-cy="favorite"
               type="checkbox"
               checked={favorite}
               onChange={(e) => setFavorite(e.target.checked)}
@@ -155,10 +162,10 @@ export const FilterModal: React.FC<FilterModalProps> = ({
         </div>
 
         <DialogFooter className="mt-6 flex justify-end space-x-3">
-            <Button onClick={handleReset} variant={'secondary'}>
+            <Button onClick={handleReset} variant={'secondary'} data-cy="reset-filters">
                 Reset
             </Button>
-          <Button onClick={handleApply}>
+          <Button onClick={handleApply} data-cy="apply-filters">
             Apply
           </Button>
         </DialogFooter>

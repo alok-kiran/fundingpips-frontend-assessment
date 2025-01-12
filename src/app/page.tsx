@@ -10,6 +10,7 @@ export default function Home() {
         <div>
           <div className="mx-auto max-w-3xl text-center">
             <motion.h1
+              data-cy="home-title"
               initial={{ opacity: 0, y: -50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1 }}
@@ -20,6 +21,7 @@ export default function Home() {
             </motion.h1>
 
             <motion.p
+              data-cy="home-description"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 1 }}
@@ -35,6 +37,7 @@ export default function Home() {
             >
               <Link href="/stocks">
                 <motion.div
+                  data-cy="explore-stocks-title"
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                   className="block w-full rounded border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white hover:text-white focus:outline-none focus:ring active:text-opacity-75 sm:w-auto"
@@ -45,6 +48,7 @@ export default function Home() {
 
               <Link href="https://fundingpips.com/" target='_blank'>
                 <motion.div
+                  data-cy="start-trading-title"
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                   className=" block w-full rounded border border-blue-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent focus:outline-none focus:ring active:bg-blue-500 sm:w-auto"

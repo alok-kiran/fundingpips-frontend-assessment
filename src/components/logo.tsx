@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export const Logo = () => {
   return (
-    <Link href="/">
+    <Link href="/" data-cy="logo">
       <div className="hover:opacity-75 transition items-center gap-x-2 hidden md:flex">
         <Image
           src="/logo.svg"

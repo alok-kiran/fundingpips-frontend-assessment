@@ -158,7 +158,7 @@ function Stocks() {
             <div>
                 <Image src="/logo.svg" alt="logo" width={42} height={42} />
             </div>
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Market Overview</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900" data-cy="stock-page-title">Market Overview</h1>
           </div>
           
           <div className="border-b border-gray-200 flex flex-row justify-between items-center">
@@ -179,6 +179,7 @@ function Stocks() {
 
             {activeTab === 'all' && (
               <div
+                data-cy="filter-button"
                 className="space-x-2 flex flex-row justify-between items-center cursor-pointer"
                 onClick={openFilterModal}
               >

@@ -41,7 +41,7 @@ const StockTable = ({
       <table className="w-full divide-y divide-gray-200 ">
         <thead className="bg-gray-50">
           <tr className=' cursor-pointer'>
-            <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onClick={handleSortBySymbolName}>
+            <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-cy="symbol-sort" onClick={handleSortBySymbolName}>
               <div className="flex items-center space-x-1">
               <div className="flex items-center justify-end space-x-1">
                 <span>Symbol</span>
@@ -49,7 +49,7 @@ const StockTable = ({
               </div>
               </div>
             </th>
-            <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" onClick={handleSortByName}>
+            <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider" data-cy="name-sort" onClick={handleSortByName}>
             <div className="flex items-center space-x-1">
               <div className="flex items-center justify-end space-x-1">
                 <span>Company</span>
@@ -57,19 +57,19 @@ const StockTable = ({
               </div>
               </div>
             </th>
-            <th className="px-6 py-4 text-right text-xs font-medium text-gray-500 uppercase tracking-wider" onClick={handleSortByPrice}>
+            <th className="px-6 py-4 text-right text-xs font-medium text-gray-500 uppercase tracking-wider" data-cy="price-sort" onClick={handleSortByPrice}>
               <div className="flex items-center justify-end space-x-1">
                 <span>Price</span>
                 <ArrowUpDown size={14} className="text-blue-700 font-bold" />
               </div>
             </th>
-            <th className="px-6 py-4 text-right text-xs font-medium text-gray-500 uppercase tracking-wider" onClick={handleSortByChange}>
+            <th className="px-6 py-4 text-right text-xs font-medium text-gray-500 uppercase tracking-wider" data-cy="change-sort" onClick={handleSortByChange}>
             <div className="flex items-center justify-end space-x-1">
                 <span>Change</span>
                 <ArrowUpDown size={14} className="text-blue-700 font-bold" />
               </div>
             </th>
-            <th className="px-6 py-4 text-right text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell" onClick={handleSortByPercentage}>
+            <th className="px-6 py-4 text-right text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell" data-cy="percentage-sort" onClick={handleSortByPercentage}>
               <div className="flex items-center justify-end space-x-1">
                 <span>% Change</span>
                 <ArrowUpDown size={14} className="text-blue-700 font-bold" />
@@ -90,7 +90,7 @@ const StockTable = ({
                   <span className="text-gray-700">{stock.company}</span>
                 </td>
                 <td className="px-6 py-5 text-right whitespace-nowrap">
-                  <span className="font-medium text-gray-900">${stock.price}</span>
+                  <span className="font-medium text-gray-900" data-cy="stock-price">${stock.price}</span>
                 </td>
                 <td className="px-6 py-5 text-right whitespace-nowrap">
                   <div className="flex items-center justify-end space-x-1">
@@ -103,6 +103,7 @@ const StockTable = ({
                       className={`font-medium ${
                         isPositive ? 'text-green-600' : 'text-red-600'
                       }`}
+                      data-cy="stock-change-amount"
                     >
                       {stock.change_amount?.replace("-", "")}
                     </span>
@@ -116,6 +117,7 @@ const StockTable = ({
                       <TrendingDown size={16} className="text-red-500" />
                     )}
                     <span
+                    data-cy="stock-change-percentage"
                       className={`font-medium ${
                         isPositive ? 'text-green-600' : 'text-red-600'
                       }`}
@@ -126,7 +128,7 @@ const StockTable = ({
                 </td>
                 <td className="px-6 py-5 text-center cursor-pointer" onClick={() => handleToggleFavorite(stock.company_symbol)}>
                   {stock.isfavourite ? (
-                    <Star size={18} className="text-yellow-400 inline-block" style={{
+                    <Star data-cy="favourite" size={18} className="text-yellow-400 inline-block" style={{
                       fill: 'currentColor'
                     }} />
                   ) : (
