@@ -1,114 +1,181 @@
-# Funding Pips Frontend Assessment
 
-Welcome to the Funding Pips Frontend Assessment! This project is a starting point for your task, and you are expected to build upon it to complete the challenge. The goal is to evaluate your technical skills, problem-solving ability, and proficiency with modern frontend development tools.
+# 1. How to run the project locally
 
+- Clone the repo
+```
+git clone https://github.com/alok-kiran/fundingpips-frontend-assessment.git
+cd fundingpips-frontend-assessment
+
+```
+- Make sure node version is 20 or greater
+- npm intstall
+- go to http://localhost:3000
+- or you can directly access it without running at - https://fundingpips-demo.vercel.app/
+
+# 2. How to run unit test
+- npm run test
+### Code coverage
+- Open the index.html file from -  **coverage/Icov-report/** in the browser
 ---
 
-## **Objective**
+# 3. How to run e2e
+- npx cypress open or npx cypress run
+- cypress will open a browser, you can see the test run there
+- For code coverage I needed to do extra steps, didn't have time
 
-Build a responsive and performant stock price tracker using modern frontend technologies. The challenge focuses on your expertise in **React**, **Redux Toolkit**, **Tailwind CSS**, **TypeScript**, and testing frameworks while assessing your problem-solving skills and ability to optimise solutions.
+### Code coverage - Unit test
+- Open the index.html file from -  **coverage/Icov-report/** in the browser
 
----
 
-## **Requirements**
+# 4. Project Structure & Architecture
+### Decision
+- Chose Next.js (with the new App Router) for built-in file-based routing, SSR, and React Server Components.
+- Organized routes under the app/ directory (e.g., app/page.tsx, app/dashboard/page.tsx) and used app/layout.tsx for global layout.
+- Implemented a Redux store to manage state across client components.
+### Trade-offs
+#### Pros:
+- Consolidated approach: no separate backend needed for minor APIs. You can mock data in `app/api/stocks/route.ts`
+- Next.js automatically handles route creation, bundling, code splitting, and SSR.
+- Redux keeps state consistent across the app, especially if multiple components need the same data (stocks, user preferences, etc.).
+#### Cons:
+- Next.js’ newer App Router may require learning or unlearning patterns from older versions.
+- Redux introduces overhead in setting up actions, reducers, and slices, compared to local state or simpler libraries.
+- Must be mindful of where Redux is used (client vs. server) to avoid SSR pitfalls.
 
-### **1. Core Feature Implementation**
+# 5. Layout & Page Structure
+### Decision
+- Used layout.tsx to handle global UI elements (e.g., navigation, footer, meta tags).
+- Created page.tsx within each route folder for self-contained page logic and rendering.
+### Trade-offs
+#### Pros:
+- Layout components keep global concerns (navigation, consistent styling) in one place.
+- Page-based file structure is intuitive—less manual routing configuration.
+#### Cons:
+- Nested or parallel layouts can become complex if the app grows significantly.
+- Not every page needs a distinct layout, so you might occasionally find the structure more verbose than necessary.
 
-1. Build a stock price tracker dashboard that includes:
-   - **Data Fetching**: Fetch stock prices from a public API (e.g., [Alpha Vantage](https://www.alphavantage.co/documentation/) or mock data).
-   - **Table Display**: Display stock prices in a sortable and filterable table.
-   - **Favorites**: Add/remove stocks to/from a list of favorites.
-   - **Responsive Design**: Use **Tailwind CSS** to style the UI for responsiveness and modern aesthetics.
-2. Stocks should be displayed in a table with the following columns:
-   - **Stock Symbol**: The ticker symbol (e.g., AAPL, TSLA).
-   - **Company Name**: The name of the company (e.g., Apple, Tesla).
-   - **Price**: The current stock price in USD (e.g., $150.25).
-   - **Change**: The price change in USD compared to the previous close (e.g., +$2.50, -$1.30).
-   - **Percentage Change**: The percentage change compared to the previous close (e.g., +1.5%, -0.8%).
-3. **State Management**:
-   - Use **Redux Toolkit** to manage global state for the application.
+# 6. Styling & UI Framework
+### Decision
+- **Tailwind CSS** as the primary utility-first styling framework.
+- **shadcn/ui** components (e.g., buttons, modals) to maintain a consistent, modern UI without reinventing the wheel.
+### Trade-offs
+#### Pros:
+- **Tailwind CSS:** Rapid styling with utility classes; easy to create custom themes using `tailwind.config.js`.
+- **shadcn/ui:** Pre-built, Tailwind-based components that align with modern design patterns (often built on Radix UI).
+- Consistent UI look-and-feel for buttons, modals, and other interactive components.
+#### Cons:
+- Some devs may find utility classes verbose in the JSX.
+- shadcn/ui is relatively new, so documentation and community resources might be more limited than older libraries.
+- Must manage versions or updates from shadcn/ui if you rely on many of their components.
 
----
+# 6. Routing & Navigation (App Router)
+### Decision
+- Leveraged Next.js App Router for file-based routing, placing each route in `app/<route>/page.tsx`.
+- Used Link from next/link for client-side transitions.
+### Trade-offs
+#### Pros:
+- Automatic route creation—less boilerplate than older Next.js or React Router setups.
+- Built-in prefetching for <Link> can speed up client-side transitions.
+- Can choose between server and client components for performance or interactivity.
+#### Cons:
+- Must carefully decide which components are client-based (e.g., those needing Redux or interactive shadcn/ui components) vs. server-based (for SSR or static rendering).
+- If you rely heavily on dynamic routes or nested layouts, you need to plan folder structure carefully.
 
-### **2. Testing**
+# 5. Data Flow & State Management (Redux)
+### Decision
+- Set up a Redux store for global state.
+- Integrated Redux with Next.js by marking relevant components as client components.
+- Mocked stocks data in `app/api/stocks/route.ts` and fetched it to populate the Redux store.
+### Trade-offs
+#### Pros:
+- Centralized control over global data (stocks, user preferences, UI states, etc.).
+- Easy debugging via Redux DevTools; clear flow of actions and state changes.
+- Mocked data approach keeps local development self-contained—no external API dependency.
+#### Cons:
+- Overhead of Redux boilerplate (actions, reducers, slices) compared to simpler local states or Context.
+- Must be mindful of data fetching patterns (SSR vs. client-side) to avoid hydration mismatches.
 
-1. Write tests to validate your implementation:
-   - **Unit Tests**: Test Redux slices and individual components using **Testing Library**.
-   - **End-to-End Tests (Optional)**: Use **Cypress** to simulate user interactions, such as adding/removing favorites and filtering stocks.
+# 6. API Integration (Mocked Data)
+### Decision
+- Next.js Route Handler in `app/api/stocks/route.ts` to serve static JSON of stocks data.
+- Frontend fetches `/api/stocks` at runtime or build time.
+### Trade-offs
+#### Pros:
+- Eliminates need for external backend service during early development.
+- Encourages clear contract between frontend and API.
+- Easy to switch to real API later by replacing route handler logic.
+#### Cons:
+- Doesn't represent real-time data.
+- May overlook edge cases that real API would present (authentication, rate limits).
 
----
+# 7. Responsiveness & Accessibility
+### Decision
+- Applied mobile-first design with Tailwind's responsive classes.
+- Used semantic HTML and ARIA attributes within shadcn/ui components.
+### Trade-offs
+#### Pros:
+- Consistent responsive approach using Tailwind breakpoints.
+- Robust accessibility through shadcn/ui's accessible primitives.
+#### Cons:
+- Time-consuming testing across multiple screen sizes.
+- Must maintain accessibility when modifying shadcn/ui components.
 
-### **3. Optimisation and Scalability**
+# 8. Testing & Quality Assurance
+### Decision
+- Jest and React Testing Library for Redux slices and UI components.
+- Potential E2E testing with Cypress or Playwright.
+### Trade-offs
+#### Pros:
+- Early bug detection in Redux flow and UI components.
+- Confidence in SSR and client-side state functionality.
+#### Cons:
+- Additional setup time for test tooling.
+- Test maintenance can slow development during requirement changes.
 
-1. Optimise the application for performance:
+# 9. Deployment & Delivery
+### Decision
+- Deployed on Vercel for easy integration and automatic builds.
+- Minimal configuration for SSR routes and API endpoints.
+### Trade-offs
+#### Pros:
+- One-click or automatic deployment from GitHub/CI pipelines.
+- Built-in serverless function handling for route handlers.
+#### Cons:
+- Potential cold-start performance issues at scale.
+- Custom server configuration needed for specialized hosting.
 
-   - Implement lazy loading for components where applicable.
-   - Use memoization to reduce unnecessary re-renders.
+# 10. Future Improvements
+### Pagination
+- Implement pagination for stocks listing.
+- Enhance user experience and performance.
 
-2. Use **TypeScript** to ensure type safety across the project.
+### Searchable Table
+- Add search/filter functionality.
+- Improve usability with large datasets.
 
----
+### Real-Time Data
+- Transition to WebSocket or real-time mechanisms.
+- Enable automatic stock data updates.
 
-## **Deliverables**
+### Enhanced Components
+- Further integrate shadcn/ui components.
+- Compare with alternative Tailwind-based libraries.
 
-1. A fully functional application that meets the requirements.
-2. Tests included in the codebase.
-3. A detailed **README** that includes:
-   - Instructions to run the application and tests.
-   - Explanation of your design decisions and trade-offs.
-   - Notes on performance optimizations and scalability considerations.
-   - Ideas for future improvements.
+### API Integration
+- Replace mock API with live backend.
+- Address authentication and rate limiting.
 
----
+### State Management
+- Consider RTK Query for async logic.
+- Scale Redux structure with modular code.
 
-## **Getting Started**
+### Performance
+- Leverage React Server Components.
+- Implement Next.js caching mechanisms.
 
-This project was bootstrapped with [`create-next-app`](https://nextjs.org/docs/api-reference/create-next-app). Follow these steps to get started:
+### Accessibility
+- Regular audits with axe/Lighthouse.
+- Maintain ARIA patterns in components.
 
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
-2. Run the development server:
-   ```bash
-   npm run dev
-   ```
-3. Open http://localhost:3000 with your browser to see the result.
-
----
-
-## **Submission Instructions**
-
-1. Clone this repository and complete the challenge in your own repository.
-2. Once complete, make your repository public and share the link with us.
-3. Ensure your repository includes:
-   - The complete source code.
-   - Test files and results.
-   - A detailed README file.
-
----
-
-## **Evaluation Criteria**
-
-1. **Code Quality**:
-   - Clean, modular, and maintainable code adhering to best practices.
-2. **Functionality**:
-   - Completeness of the required features and responsiveness of the UI.
-3. **Testing**:
-   - Coverage and quality of unit and end-to-end tests.
-4. **Optimisation**:
-   - Implementation of performance improvements and scalability.
-5. **Documentation**:
-   - Clarity and thoroughness of your README file.
-6. **Problem-Solving**:
-   - Ability to handle edge cases and provide thoughtful solutions.
-
----
-
-## **Estimated Time**
-
-The task is designed to take approximately **4–6 hours** to complete.
-
----
-
-Thank you for taking the time to complete this challenge. We look forward to reviewing your submission!
+### Testing
+- Expand coverage for API endpoints and Redux.
