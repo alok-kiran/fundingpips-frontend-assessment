@@ -161,11 +161,11 @@ export const FilterModal: React.FC<FilterModalProps> = ({
           </div>
         </div>
 
-        <DialogFooter className="mt-6 flex justify-end space-x-3">
-            <Button onClick={handleReset} variant={'secondary'} data-cy="reset-filters">
+        <DialogFooter className="flex flex-row justify-center items-center w-full gap-x-3">
+            <Button className="w-full" onClick={handleReset} variant={'secondary'} data-cy="reset-filters">
                 Reset
             </Button>
-          <Button onClick={handleApply} data-cy="apply-filters">
+          <Button className="w-full" onClick={handleApply} data-cy="apply-filters">
             Apply
           </Button>
         </DialogFooter>
