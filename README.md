@@ -9,6 +9,7 @@ cd fundingpips-frontend-assessment
 ```
 - Make sure node version is 20 or greater
 - npm intstall
+- npm run dev
 - go to http://localhost:3000
 - or you can directly access it without running at - https://fundingpips-demo.vercel.app/
 
