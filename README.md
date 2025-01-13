@@ -10,7 +10,8 @@ cd fundingpips-frontend-assessment
 - Make sure node version is 20 or greater
 - npm intstall
 - npm run dev
-- go to http://localhost:3000
+- go to http://localhost:3000 homepage
+- go to http://localhost:3000/stocks for stocks table
 - or you can directly access it without running at - https://fundingpips-demo.vercel.app/
 
 # 2. How to run unit test
